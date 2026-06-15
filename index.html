@@ -5,325 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NeoPlay — Game Marketplace</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background: #0A0A0A;
-            font-family: 'Inter', sans-serif;
-            color: #FFFFFF;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header */
-        header {
-            background: #0F0F0F;
-            border-bottom: 1px solid #1F1F1F;
-            padding: 16px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        header .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .logo {
-            font-size: 28px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            color: #FFFFFF;
-        }
-
-        .logo .play {
-            color: #FFD700;
-        }
-
-        nav a {
-            color: #E0E0E0;
-            text-decoration: none;
-            margin: 0 15px;
-            transition: color 0.3s;
-            font-weight: 500;
-        }
-
-        nav a:hover {
-            color: #FFD700;
-        }
-
-        /* Hero */
-        .hero {
-            text-align: center;
-            padding: 60px 20px;
-            background: linear-gradient(135deg, #0A0A0A 0%, #1A1A2E 100%);
-        }
-
-        .hero h1 {
-            font-size: 48px;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
-        }
-
-        .gold {
-            color: #FFD700;
-        }
-
-        .hero-sub {
-            font-size: 20px;
-            color: #FFD700;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-        }
-
-        .hero-text {
-            color: #AAAAAA;
-            margin-bottom: 30px;
-        }
-
-        .btn-large {
-            display: inline-block;
-            background: linear-gradient(90deg, #FFD700, #FFA500);
-            padding: 14px 50px;
-            border-radius: 40px;
-            color: #0A0A0A;
-            font-weight: 700;
-            text-decoration: none;
-            font-size: 18px;
-            transition: transform 0.3s;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn-large:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
-        }
-
-        /* Badges section */
-        .badges-section {
-            padding: 60px 0;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 32px;
-            margin-bottom: 40px;
-        }
-
-        .badges-grid {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-
-        .badge-card {
-            background: #1A1A1A;
-            border-radius: 24px;
-            padding: 30px 25px;
-            text-align: center;
-            width: 220px;
-            border: 1px solid #2A2A2A;
-            transition: transform 0.3s;
-        }
-
-        .badge-card:hover {
-            transform: translateY(-5px);
-            border-color: #FFD700;
-        }
-
-        .badge-card.absolute {
-            border: 2px solid #FFD700;
-        }
-
-        .badge-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
-        }
-
-        .badge-card h3 {
-            font-size: 18px;
-            margin-bottom: 8px;
-            color: #FFD700;
-        }
-
-        .badge-card p {
-            color: #AAAAAA;
-            font-size: 14px;
-            margin-bottom: 15px;
-        }
-
-        .badge-price {
-            color: #FFFFFF;
-            font-weight: 700;
-            margin-bottom: 15px;
-        }
-
-        .btn-small {
-            background: transparent;
-            border: 1px solid #FFD700;
-            color: #FFD700;
-            padding: 8px 20px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .btn-small:hover {
-            background: #FFD700;
-            color: #0A0A0A;
-        }
-
-        /* Auth card (вход/регистрация) */
-        .auth-card {
-            background: #1A1A1A;
-            border-radius: 24px;
-            padding: 30px;
-            max-width: 400px;
-            margin: 40px auto;
-            border: 1px solid #2A2A2A;
-            text-align: center;
-        }
-
-        .auth-card h3 {
-            color: #FFD700;
-            margin-bottom: 20px;
-        }
-
-        .auth-card input {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 12px;
-            background: #0F0F0F;
-            border: 1px solid #2A2A2A;
-            border-radius: 12px;
-            color: white;
-        }
-
-        .auth-card button {
-            width: 100%;
-            margin-top: 5px;
-        }
-
-        .profile-info {
-            background: #1A1A1A;
-            border-radius: 24px;
-            padding: 20px;
-            margin: 40px auto;
-            max-width: 400px;
-            text-align: center;
-            border: 1px solid #2A2A2A;
-        }
-
-        .profile-info .owner {
-            color: #FFD700;
-            font-weight: bold;
-        }
-
-        .logout-btn {
-            background: #FF4444;
-            border: none;
-            margin-top: 15px;
-        }
-
-        /* Stats */
-        .stats {
-            background: #0F0F0F;
-            padding: 50px 0;
-            border-top: 1px solid #1F1F1F;
-            border-bottom: 1px solid #1F1F1F;
-        }
-
-        .stats-grid {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 40px;
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 48px;
-            font-weight: 800;
-            color: #FFD700;
-        }
-
-        .stat-label {
-            color: #AAAAAA;
-        }
-
-        /* Footer */
-        footer {
-            background: #0F0F0F;
-            padding: 40px 0;
-            text-align: center;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-
-        .footer-links a {
-            color: #AAAAAA;
-            text-decoration: none;
-        }
-
-        .footer-links a:hover {
-            color: #FFD700;
-        }
-
-        .footer-copy {
-            color: #666666;
-            font-size: 14px;
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 32px; }
-            .badge-card { width: 180px; }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
         <div class="container">
-            <div class="logo">NEO<span class="play">PLAY</span></div>
+            <div class="logo" onclick="location.href='index.html'">NEO<span class="play">PLAY</span></div>
             <nav>
-                <a href="#">Главная</a>
-                <a href="#">Каталог</a>
-                <a href="#">Биржа</a>
-                <a href="#">Значки</a>
-                <a href="#">Профиль</a>
-                <a href="#">Кошелек</a>
+                <a href="index.html">🏠 Главная</a>
+                <a href="catalog.html">📦 Каталог</a>
+                <a href="exchange.html">🔄 Биржа</a>
+                <a href="badges.html">🏆 Значки</a>
+                <a href="profile.html">👤 Профиль</a>
+                <a href="wallet.html">💳 Кошелек</a>
             </nav>
+            <div class="auth-links">
+                <a href="login.html" id="loginLink">Вход</a>
+                <a href="register.html" id="registerLink">Регистрация</a>
+                <span id="userBalance" class="balance" style="display:none;">0 ₽</span>
+            </div>
         </div>
     </header>
 
     <main>
         <!-- Розыгрыш -->
         <section class="hero">
-            <h1>РОЗЫГРЫШ <span class="gold">АБСОЛЮТА</span></h1>
-            <div class="hero-sub">0% КОМИССИИ НАВСЕГДА</div>
-            <p class="hero-text">Участвуй в розыгрыше и получай топовые награды на лучших условиях платформы!</p>
-            <button class="btn-large" id="giveawayBtn">УЧАСТВОВАТЬ</button>
+            <div class="container">
+                <h1>РОЗЫГРЫШ <span class="gold">АБСОЛЮТА</span></h1>
+                <div class="hero-badge">💎</div>
+                <div class="hero-sub">0% КОМИССИИ НАВСЕГДА</div>
+                <p class="hero-text">Участвуй в розыгрыше и получай топовые награды на лучших условиях платформы!</p>
+                <button class="btn-glow" id="giveawayBtn">УЧАСТВОВАТЬ</button>
+            </div>
         </section>
 
         <!-- Значки -->
@@ -331,40 +44,37 @@
             <div class="container">
                 <h2 class="section-title">КОЛЛЕКЦИОННЫЕ ЗНАЧКИ</h2>
                 <div class="badges-grid">
-                    <div class="badge-card">
+                    <div class="badge-card" data-badge="common">
                         <div class="badge-icon">⚪</div>
                         <h3>ОБЫЧНЫЙ</h3>
                         <p>Базовый значок</p>
-                        <div class="badge-price">от 19 ₽</div>
-                        <button class="btn-small">ПЕРЕЙТИ В КАТАЛОГ</button>
+                        <div class="price">от 19 ₽</div>
+                        <button class="btn-outline" onclick="location.href='catalog.html'">В КАТАЛОГ</button>
                     </div>
-                    <div class="badge-card">
+                    <div class="badge-card" data-badge="rare">
                         <div class="badge-icon">🟣</div>
                         <h3>РЕДКИЙ</h3>
                         <p>Редкий значок</p>
-                        <div class="badge-price">от 99 ₽</div>
-                        <button class="btn-small">ПЕРЕЙТИ В КАТАЛОГ</button>
+                        <div class="price">от 99 ₽</div>
+                        <button class="btn-outline" onclick="location.href='catalog.html'">В КАТАЛОГ</button>
                     </div>
-                    <div class="badge-card">
+                    <div class="badge-card" data-badge="elite">
                         <div class="badge-icon">🔴</div>
                         <h3>ЭЛИТНЫЙ</h3>
                         <p>Элитный значок</p>
-                        <div class="badge-price">от 499 ₽</div>
-                        <button class="btn-small">ПЕРЕЙТИ В КАТАЛОГ</button>
+                        <div class="price">от 499 ₽</div>
+                        <button class="btn-outline" onclick="location.href='catalog.html'">В КАТАЛОГ</button>
                     </div>
-                    <div class="badge-card absolute">
+                    <div class="badge-card absolute" data-badge="absolute">
                         <div class="badge-icon">💎</div>
                         <h3>АБСОЛЮТ</h3>
                         <p>Абсолютный значок</p>
-                        <div class="badge-price">от 999 ₽</div>
-                        <button class="btn-small">ПЕРЕЙТИ В КАТАЛОГ</button>
+                        <div class="price">от 999 ₽</div>
+                        <button class="btn-outline" onclick="location.href='catalog.html'">В КАТАЛОГ</button>
                     </div>
                 </div>
             </div>
         </section>
-
-        <!-- Блок входа / регистрации или профиль -->
-        <div class="container" id="authBlock"></div>
 
         <!-- Статистика -->
         <section class="stats">
@@ -394,77 +104,62 @@
     <footer>
         <div class="container">
             <div class="footer-links">
-                <a href="#">Политика конфиденциальности</a>
-                <a href="#">Пользовательское соглашение</a>
-                <a href="#">Telegram-канал</a>
-                <a href="#">Поддержка</a>
+                <a href="policy.html">Политика конфиденциальности</a>
+                <a href="offer.html">Пользовательское соглашение</a>
+                <a href="https://t.me/neo_play_news" target="_blank">Telegram-канал</a>
+                <a href="support.html">Поддержка</a>
             </div>
             <div class="footer-copy">© 2025 NeoPlay. Все сделки защищены.</div>
         </div>
     </footer>
 
+    <script src="script.js"></script>
     <script>
-        // Рендер блока входа/профиля
-        function renderAuthBlock() {
-            const container = document.getElementById('authBlock');
-            const currentUser = JSON.parse(localStorage.getItem('neoPlay_currentUser'));
+        // Обновление интерфейса при загрузке
+        function updateUI() {
+            const user = JSON.parse(localStorage.getItem('neoPlay_currentUser'));
+            const loginLink = document.getElementById('loginLink');
+            const registerLink = document.getElementById('registerLink');
+            const userBalance = document.getElementById('userBalance');
             
-            if (!currentUser) {
-                container.innerHTML = `
-                    <div class="auth-card">
-                        <h3>🔐 Вход</h3>
-                        <form id="loginForm">
-                            <input type="text" id="loginPhone" placeholder="Номер телефона" required>
-                            <input type="password" id="loginPassword" placeholder="Пароль" required>
-                            <button type="submit" class="btn-small" style="width:100%;">Войти</button>
-                        </form>
-                        <p style="margin-top:15px;">Нет аккаунта? <a href="register.html" style="color:#FFD700;">Зарегистрироваться</a></p>
-                    </div>
-                `;
-                
-                document.getElementById('loginForm')?.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    const phone = document.getElementById('loginPhone').value;
-                    const password = document.getElementById('loginPassword').value;
-                    const users = JSON.parse(localStorage.getItem('neoPlay_users')) || [];
-                    const user = users.find(u => u.phone === phone && u.password === password);
-                    if (!user) {
-                        alert('Неверный номер или пароль');
-                        return;
-                    }
-                    localStorage.setItem('neoPlay_currentUser', JSON.stringify(user));
-                    renderAuthBlock();
-                });
+            if (user) {
+                loginLink.style.display = 'none';
+                registerLink.style.display = 'none';
+                userBalance.style.display = 'inline-block';
+                userBalance.innerText = `${user.balance || 0} ₽`;
             } else {
-                container.innerHTML = `
-                    <div class="profile-info">
-                        <h3>👤 ${currentUser.username}</h3>
-                        ${currentUser.isOwner ? '<p class="owner">👑 Владелец</p>' : ''}
-                        <p>📞 ${currentUser.phone}</p>
-                        <p>💰 Баланс: ${currentUser.balance} ₽</p>
-                        <p>🏆 Сделок: ${currentUser.deals || 0}</p>
-                        <button id="logoutBtn" class="btn-small logout-btn" style="background:#FF4444; color:white;">ВЫЙТИ</button>
-                    </div>
-                `;
-                document.getElementById('logoutBtn')?.addEventListener('click', () => {
-                    localStorage.removeItem('neoPlay_currentUser');
-                    renderAuthBlock();
-                });
+                loginLink.style.display = 'inline-block';
+                registerLink.style.display = 'inline-block';
+                userBalance.style.display = 'none';
             }
         }
-
+        
         // Розыгрыш
         document.getElementById('giveawayBtn')?.addEventListener('click', () => {
-            const currentUser = JSON.parse(localStorage.getItem('neoPlay_currentUser'));
-            if (!currentUser) {
+            const user = JSON.parse(localStorage.getItem('neoPlay_currentUser'));
+            if (!user) {
                 alert('Войдите в профиль, чтобы купить билет за 100 ₽');
-                renderAuthBlock();
+                location.href = 'login.html';
                 return;
             }
-            alert('🎟 Билет на розыгрыш — 100 ₽. Следите за объявлением победителей в 20:00!');
+            if ((user.balance || 0) < 100) {
+                alert('Недостаточно средств. Пополните баланс в кошельке.');
+                location.href = 'wallet.html';
+                return;
+            }
+            user.balance -= 100;
+            localStorage.setItem('neoPlay_currentUser', JSON.stringify(user));
+            
+            // Сохраняем билет
+            const tickets = JSON.parse(localStorage.getItem('neoPlay_tickets')) || [];
+            tickets.push({ username: user.username, phone: user.phone, date: new Date().toISOString() });
+            localStorage.setItem('neoPlay_tickets', JSON.stringify(tickets));
+            
+            alert('✅ Билет куплен! Удачи в розыгрыше! Итоги в 20:00.');
+            updateUI();
         });
-
-        renderAuthBlock();
+        
+        updateUI();
     </script>
 </body>
 </html>
