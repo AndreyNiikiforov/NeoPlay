@@ -1,0 +1,86 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #0a0a0a;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    color: white;
+}
+
+header {
+    background: #0f0f0f;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #ffd700;
+    flex-wrap: wrap;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #ffd700;
+}
+
+.logo span {
+    color: white;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 30px;
+}
+
+.hero, .giveaway, .catalog, .exchange {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.gold {
+    color: #ffd700;
+}
+
+.btn {
+    background: #ffd700;
+    color: black;
+    padding: 12px 30px;
+    border-radius: 40px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    margin: 20px 0;
+}
+
+.badges {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 40px;
+}
+
+.badge {
+    background: #1a1a1a;
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+    width: 150px;
+    border: 1px solid #333;
+}
+
+.absolute {
+    border: 2px solid gold;
+    box-shadow: 0 0 10px gold;
+}
+
+footer {
+    background: #0f0f0f;
+    text-align: center;
+    padding: 30px;
+    margin-top: 50px;
+}
