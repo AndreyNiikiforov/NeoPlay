@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Кошелёк NeoPlay</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>...</header>
+
+    <main class="container" style="padding:40px 20px;">
+        <h1 style="color:#FFD700;">💳 Кошелёк</h1>
+        <div id="walletInfo" style="background:#1A1A1A; padding:30px; border-radius:20px; text-align:center;">
+            <!-- динамическая информация -->
+        </div>
+    </main>
+
+    <footer>...</footer>
+
+    <script>
+        function updateWallet() {
+            const user = JSON.parse(localStorage.getItem('neoPlay_currentUser'));
+            if (!user) {
+                location.href = 'login.html';
+                return;
+            }
+            document.getElementById('walletInfo').innerHTML = `
+                <h2>Баланс: ${user.balance || 0} ₽</h2>
+                <div style="margin:30px 0;">
+                    <h3>Пополнение</h3>
+                    <button onclick="deposit(100)" class="btn-outline">100 ₽</button>
+                    <button onclick="deposit(500)" class="btn-outline">500 ₽</button>
+                    <button onclick="deposit(1000)" class="btn-outline">1000 ₽</button>
+                    <button onclick="deposit(5000)" class="btn-outline">5000 ₽</button>
+                </div>
+                <div>
+                    <h3>Вывод</h3>
+                    <input type="number" id="withdrawAmount" placeholder="Сумма" style="padding:10px; margin-right:10px;">
+                    <button onclick="withdraw()" class="btn-glow">Вывести</button>
+                </div>
+                <p style="margin-top:30px; color:#888;">💰 Пополнение через ЮMoney будет доступно после настройки</p>
+            `;
+        }
+
+        window.deposit = (amount) => {
+            const user = JSON.parse(localStorage.getItem('neoPlay_currentUser'));
+            user.balance = (user.balance || 0) + amount;
+            localStorage.setItem('neoPlay_currentUser', JSON.stringify(user));
+            updateWallet();
+        };
+
+        window.withdraw = () => {
+            const amount = parseInt(document.getElementById('withdrawAmount').value);
+            if (isNaN(amount) || amount <= 0) { alert('Введите сумму'); return; }
+            const user = JSON.parse(localStorage.getItem('neoPlay_currentUser'));
+            if (user.balance < amount) { alert('Недостаточно средств'); return; }
+            user.balance -= amount;
+            localStorage.setItem('neoPlay_currentUser', JSON.stringify(user));
+            alert(`Заявка на вывод ${amount} ₽ отправлена. Средства поступят в течение 24 часов.`);
+            updateWallet();
+        };
+
+        updateWallet();
+    </script>
+</body>
+</html>
