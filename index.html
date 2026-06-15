@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeoPlay — 0% комиссии навсегда</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0a0a0a;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            padding: 40px;
+        }
+        h1 { color: #ffd700; font-size: 48px; margin-bottom: 20px; }
+        .gold { color: #ffd700; }
+        .btn {
+            display: inline-block;
+            background: #ffd700;
+            color: black;
+            padding: 14px 35px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 30px;
+        }
+        .badge { margin: 20px 0; font-size: 24px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>NEO<span class="gold">PLAY</span></h1>
+        <p class="badge">💎 Абсолют — 0% комиссия навсегда + 20% скидка</p>
+        <p>🎁 Розыгрыш 3 Абсолютов через 24 часа</p>
+        <p>💰 Билет — 100₽</p>
+        <a href="#" class="btn" id="btn">Купить билет</a>
+        <p style="margin-top: 30px;">📱 Telegram: @neo_play_news | Чат: @neo_play_chat</p>
+    </div>
+    <script>
+        document.getElementById('btn')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Оплата через ЮMoney скоро. Напиши @neoplay_support для покупки билета.');
+        });
+    </script>
+</body>
+</html>
