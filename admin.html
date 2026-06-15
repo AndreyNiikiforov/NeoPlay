@@ -1,0 +1,41 @@
+<main>
+    <h1>Панель владельца</h1>
+    <div class="admin-card">
+        <h3>Все пользователи</h3>
+        <div id="usersList"></div>
+        <button id="addBalanceToAllBtn">+100 баланса всем</button>
+        <button id="clearTicketsBtn">Сбросить билеты розыгрыша</button>
+        <button id="runGiveawayBtn">Запустить розыгрыш вручную</button>
+    </div>
+</main>
+
+<script>
+    if (!JSON.parse(localStorage.getItem("neoPlay_currentUser"))?.isOwner) {
+        alert("Доступ только владельцу");
+        location.href = "index.html";
+    }
+
+    function renderUsers() {
+        const users = JSON.parse(localStorage.getItem("neoPlay_users")) || [];
+        const list = document.getElementById("usersList");
+        list.innerHTML = users.map(u => `<p>${u.username} — ${u.phone} — баланс: ${u.balance}₽</p>`).join("");
+    }
+    renderUsers();
+
+    document.getElementById("addBalanceToAllBtn").onclick = () => {
+        let users = JSON.parse(localStorage.getItem("neoPlay_users")) || [];
+        users = users.map(u => ({ ...u, balance: u.balance + 100 }));
+        localStorage.setItem("neoPlay_users", JSON.stringify(users));
+        renderUsers();
+        alert("Баланс обновлён");
+    };
+
+    document.getElementById("clearTicketsBtn").onclick = () => {
+        localStorage.removeItem("neoPlay_tickets");
+        alert("Билеты сброшены");
+    };
+
+    document.getElementById("runGiveawayBtn").onclick = () => {
+        alert("Розыгрыш запущен (логика уже есть в скрипте)");
+    };
+</script>

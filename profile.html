@@ -33,3 +33,15 @@
     <script src="script.js"></script>
 </body>
 </html>
+<h2 id="userNick"></h2>
+<span id="ownerBadge" style="color:gold; display:none;">👑 Владелец</span>
+
+<script>
+    const user = JSON.parse(localStorage.getItem("neoPlay_currentUser"));
+    if (user) {
+        document.getElementById("userNick").innerText = user.username;
+        if (user.isOwner) {
+            document.getElementById("ownerBadge").style.display = "inline";
+        }
+    }
+</script>

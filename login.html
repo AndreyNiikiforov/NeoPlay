@@ -1,0 +1,19 @@
+<form id="loginForm">
+    <input type="text" id="loginPhone" placeholder="Номер телефона" required>
+    <input type="password" id="loginPassword" placeholder="Пароль" required>
+    <button type="submit" class="btn">Войти</button>
+</form>
+
+<script>
+    document.getElementById("loginForm").onsubmit = (e) => {
+        e.preventDefault();
+        const phone = document.getElementById("loginPhone").value;
+        const password = document.getElementById("loginPassword").value;
+        const users = JSON.parse(localStorage.getItem("neoPlay_users")) || [];
+        const user = users.find(u => u.phone === phone && u.password === password);
+        if (!user) return alert("Неверные данные");
+        localStorage.setItem("neoPlay_currentUser", JSON.stringify(user));
+        alert(`Добро пожаловать, ${user.username}`);
+        window.location.href = "profile.html";
+    };
+</script>

@@ -3,110 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeoPlay — Game Marketplace</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <title>NeoPlay — 0% комиссии навсегда</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <div class="container">
-            <div class="logo">NEO<span class="play">PLAY</span></div>
-            <nav>
-                <a href="index.html">Главная</a>
-                <a href="catalog.html">Каталог</a>
-                <a href="exchange.html">Биржа</a>
-                <a href="badges.html">Значки</a>
-                <a href="profile.html">Профиль</a>
-            </nav>
-            <div class="auth-buttons">
-                <a href="login.html" class="btn-outline">Вход</a>
-                <a href="register.html" class="btn-primary">Регистрация</a>
-            </div>
-        </div>
+        <div class="logo">NEO<span class="gold">PLAY</span></div>
+        <nav>
+            <a href="index.html">🏠 Главная</a>
+            <a href="catalog.html">📦 Каталог</a>
+            <a href="exchange.html">🔄 Биржа</a>
+            <a href="badges.html">🏆 Значки</a>
+            <a href="profile.html">👤 Профиль</a>
+        </nav>
     </header>
 
     <main>
-        <!-- Hero секция – розыгрыш -->
         <section class="hero">
-            <div class="container">
-                <div class="hero-content">
-                    <h1>РОЗЫГРЫШ <span class="gold">АБСОЛЮТА</span></h1>
-                    <div class="badge-big">💎</div>
-                    <p class="hero-sub">0% КОМИССИИ НАВСЕГДА</p>
-                    <p class="hero-text">Участвуй в розыгрыше и получай топовые награды<br>на лучших условиях платформы!</p>
-                    <a href="#" class="btn-large" id="giveawayBtn">УЧАСТВОВАТЬ</a>
-                </div>
-            </div>
+            <h1>Значки, которые <span class="gold">меняют правила</span></h1>
+            <p>0% комиссия навсегда • 20% скидка • Розыгрыш 3 Абсолютов</p>
+            <a href="#" class="btn" id="buyTicketBtn">🎟 Купить билет 100₽</a>
         </section>
 
-        <!-- Коллекционные значки -->
-        <section class="badges-section">
-            <div class="container">
-                <h2 class="section-title">КОЛЛЕКЦИОННЫЕ ЗНАЧКИ</h2>
-                <div class="badges-grid">
-                    <div class="badge-card">
-                        <div class="badge-icon">⚪</div>
-                        <h3>ОБЫЧНЫЙ</h3>
-                        <p>Базовый значок</p>
-                        <div class="price">от 19 ₽</div>
-                    </div>
-                    <div class="badge-card">
-                        <div class="badge-icon">🟣</div>
-                        <h3>РЕДКИЙ</h3>
-                        <p>Редкий значок</p>
-                        <div class="price">от 99 ₽</div>
-                    </div>
-                    <div class="badge-card">
-                        <div class="badge-icon">🔴</div>
-                        <h3>ЭЛИТНЫЙ</h3>
-                        <p>Элитный значок</p>
-                        <div class="price">от 499 ₽</div>
-                    </div>
-                    <div class="badge-card absolute">
-                        <div class="badge-icon">💎</div>
-                        <h3>АБСОЛЮТ</h3>
-                        <p>Абсолютный значок</p>
-                        <div class="price">от 999 ₽</div>
-                    </div>
-                </div>
-            </div>
+        <section class="giveaway">
+            <h2>💎 РОЗЫГРЫШ 3 АБСОЛЮТОВ 💎</h2>
+            <p>Абсолют даёт: 0% комиссию навсегда + 20% скидку + именной значок</p>
+            <div class="price">🎫 Билет — 100 ₽</div>
+            <a href="#" class="btn" id="giveawayBtn">Участвовать сейчас</a>
+            <p class="timer">⏰ Итоги: завтра в 20:00 МСК</p>
         </section>
 
-        <!-- Статистика -->
-        <section class="stats">
-            <div class="container">
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-number">50K+</div>
-                        <div class="stat-label">Активных пользователей</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">100K+</div>
-                        <div class="stat-label">Проданных предметов</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">4.9</div>
-                        <div class="stat-label">Средняя оценка</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">24/7</div>
-                        <div class="stat-label">Поддержка</div>
-                    </div>
-                </div>
+        <section class="badges">
+            <h2>Твои будущие значки</h2>
+            <div class="badges-grid">
+                <div class="badge">⚪ Обычный<br><small>90%</small></div>
+                <div class="badge">🟣 Редкий<br><small>8%<br>комиссия 3%</small></div>
+                <div class="badge">🟠 Очень редкий<br><small>1.5%<br>комиссия 2% + скидка 3%</small></div>
+                <div class="badge">🔴 Элитный<br><small>0.4%<br>комиссия 1% + скидка 5%</small></div>
+                <div class="badge">👑 Легендарный<br><small>0.09%<br>комиссия 0% + скидка 10%</small></div>
+                <div class="badge absolute">💎 Абсолют<br><small>0.001%<br>0% комиссия + скидка 20%</small></div>
             </div>
         </section>
     </main>
 
     <footer>
-        <div class="container">
-            <div class="footer-links">
-                <a href="policy.html">Политика конфиденциальности</a>
-                <a href="offer.html">Пользовательское соглашение</a>
-                <a href="https://t.me/neo_play_news" target="_blank">Telegram-канал</a>
-                <a href="https://t.me/neo_play_chat" target="_blank">Чат поддержки</a>
-            </div>
-            <div class="footer-copy">© 2025 NeoPlay. Все сделки защищены.</div>
-        </div>
+        <p>NeoPlay — первый маркетплейс с экономикой значков</p>
+        <p>📱 Telegram: @neo_play_news | 💬 Чат: @neo_play_chat</p>
     </footer>
 
     <script src="script.js"></script>

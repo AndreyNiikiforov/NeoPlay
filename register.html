@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация — NeoPlay</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>...</header>
+
+    <main class="auth-page">
+        <div class="auth-card">
+            <h1>Регистрация</h1>
+            <form id="registerForm">
+                <input type="text" id="regPhone" placeholder="Номер телефона" value="89224030705" readonly>
+                <input type="text" id="regUsername" placeholder="Имя пользователя" required>
+                <input type="password" id="regPassword" placeholder="Пароль" required>
+                <input type="email" id="regEmail" placeholder="Email" required>
+                <button type="button" id="sendCodeBtn" class="btn">Отправить код</button>
+                <input type="text" id="regCode" placeholder="Код из письма" style="display:none;">
+                <button type="submit" id="submitRegBtn" style="display:none;" class="btn">Зарегистрироваться</button>
+            </form>
+            <p>Уже есть аккаунт? <a href="login.html">Войти</a></p>
+        </div>
+    </main>
+
+    <script>
+        let generatedCode = "";
+
+        document.getElementById("sendCodeBtn").onclick = () => {
+            const email = document.getElementById("regEmail").value;
+            if (!email) return alert("Введите email");
+            generatedCode = Math.floor(100000 + Math.random() * 900000).toString();
+            alert(`Код подтверждения: ${generatedCode} (отправлен на ${email})`);
+            document.getElementById("regCode").style.display = "block";
+            document.getElementById("submitRegBtn").style.display = "inline-block";
+        };
+
+        document.getElementById("registerForm").onsubmit = (e) => {
+            e.preventDefault();
+            const code = document.getElementById("regCode").value;
+            if (code !== generatedCode) return alert("Неверный код");
+            const phone = document.getElementById("regPhone").value;
+            const username = document.getElementById("regUsername").value;
+            const password = document.getElementById("regPassword").value;
+            const email = document.getElementById("regEmail").value;
+
+            const users = JSON.parse(localStorage.getItem("neoPlay_users")) || [];
+            if (users.find(u => u.phone === phone)) return alert("Номер уже зарегистрирован");
+
+            const newUser = {
+                phone, username, password, email,
+                isOwner: phone === "89224030705",
+                balance: 0,
+                badges: [],
+                deals: 0,
+                role: phone === "89224030705" ? "owner" : "user"
+            };
+            users.push(newUser);
+            localStorage.setItem("neoPlay_users", JSON.stringify(users));
+            localStorage.setItem("neoPlay_currentUser", JSON.stringify(newUser));
+            alert("Регистрация успешна!");
+            window.location.href = "profile.html";
+        };
+    </script>
+</body>
+</html>
