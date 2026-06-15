@@ -7,21 +7,46 @@
 </head>
 <body>
     <header>
-        <div class="logo">NEO<span>PLAY</span></div>
+        <div class="logo">NEO<span class="gold">PLAY</span></div>
         <nav>
-            <a href="index.html">Главная</a>
-            <a href="catalog.html">Каталог</a>
-            <a href="exchange.html">Биржа</a>
-            <a href="badges.html">Значки</a>
-            <a href="profile.html">Профиль</a>
+            <a href="index.html">🏠 Главная</a>
+            <a href="catalog.html">📦 Каталог</a>
+            <a href="exchange.html">🔄 Биржа</a>
+            <a href="badges.html">🏆 Значки</a>
+            <a href="profile.html">👤 Профиль</a>
         </nav>
     </header>
 
-    <section class="exchange">
-        <h1>Биржа значков</h1>
-        <div id="exchangeList"></div>
-    </section>
+    <main>
+        <h1 class="page-title">🔄 Биржа значков</h1>
+        <p class="info">💰 Комиссия NeoPlay — 2% с каждой продажи</p>
+        <div class="exchange-grid">
+            <div class="exchange-item">
+                <span class="badge-icon">🔴</span>
+                <span>Элитный</span>
+                <span>комиссия 1% + скидка 5%</span>
+                <span class="price">3 000 ₽</span>
+                <button class="btn-small">Купить</button>
+            </div>
+            <div class="exchange-item">
+                <span class="badge-icon">👑</span>
+                <span>Легендарный</span>
+                <span>комиссия 0% + скидка 10%</span>
+                <span class="price">15 000 ₽</span>
+                <button class="btn-small">Купить</button>
+            </div>
+            <div class="exchange-item absolute">
+                <span class="badge-icon">💎</span>
+                <span>Абсолют</span>
+                <span>0% комиссия + скидка 20%</span>
+                <span class="price">50 000 ₽</span>
+                <button class="btn-small">Купить</button>
+            </div>
+        </div>
+    </main>
 
-    <script src="script.js"></script>
+    <footer>
+        <p>Продавай свои значки другим пользователям</p>
+    </footer>
 </body>
 </html>

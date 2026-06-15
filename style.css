@@ -6,7 +6,7 @@
 
 body {
     background: #0a0a0a;
-    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: white;
 }
 
@@ -26,61 +26,137 @@ header {
     color: #ffd700;
 }
 
-.logo span {
-    color: white;
+.gold {
+    color: #ffd700;
 }
 
 nav a {
     color: white;
     text-decoration: none;
-    margin-left: 30px;
+    margin-left: 25px;
+    transition: color 0.3s;
 }
 
-.hero, .giveaway, .catalog, .exchange {
+nav a:hover {
+    color: #ffd700;
+}
+
+.hero, .giveaway {
     text-align: center;
     padding: 60px 20px;
 }
 
-.gold {
-    color: #ffd700;
+.hero h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
 }
 
 .btn {
     background: #ffd700;
     color: black;
-    padding: 12px 30px;
+    padding: 14px 35px;
     border-radius: 40px;
     text-decoration: none;
     font-weight: bold;
     display: inline-block;
     margin: 20px 0;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
 }
 
-.badges {
+.btn-small {
+    background: #ffd700;
+    color: black;
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.giveaway {
+    background: #111;
+    max-width: 800px;
+    margin: 40px auto;
+    border-radius: 30px;
+    border: 1px solid #ffd700;
+}
+
+.price {
+    font-size: 32px;
+    margin: 20px 0;
+    font-weight: bold;
+    color: #ffd700;
+}
+
+.badges-grid, .catalog-grid, .exchange-grid {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 25px;
     flex-wrap: wrap;
-    padding: 40px;
+    padding: 40px 20px;
 }
 
-.badge {
+.badge, .product, .exchange-item {
     background: #1a1a1a;
     padding: 20px;
     border-radius: 20px;
     text-align: center;
-    width: 150px;
+    width: 200px;
     border: 1px solid #333;
 }
 
 .absolute {
-    border: 2px solid gold;
-    box-shadow: 0 0 10px gold;
+    border: 2px solid #ffd700;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+}
+
+.badge-icon {
+    font-size: 36px;
+    display: block;
+}
+
+.page-title {
+    text-align: center;
+    margin: 40px 0 20px;
+    font-size: 36px;
+}
+
+.info {
+    text-align: center;
+    color: #aaa;
+    margin-bottom: 20px;
+}
+
+.profile-card {
+    background: #1a1a1a;
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.profile-card p {
+    margin: 15px 0;
+    font-size: 18px;
 }
 
 footer {
     background: #0f0f0f;
     text-align: center;
     padding: 30px;
-    margin-top: 50px;
+    margin-top: 60px;
+}
+
+@media (max-width: 700px) {
+    header {
+        flex-direction: column;
+        gap: 15px;
+    }
+    nav a {
+        margin: 0 15px;
+    }
 }
