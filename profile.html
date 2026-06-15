@@ -2,46 +2,67 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Профиль — NeoPlay</title>
+    <title>Профиль NeoPlay</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <div class="logo">NEO<span class="gold">PLAY</span></div>
-        <nav>
-            <a href="index.html">🏠 Главная</a>
-            <a href="catalog.html">📦 Каталог</a>
-            <a href="exchange.html">🔄 Биржа</a>
-            <a href="badges.html">🏆 Значки</a>
-            <a href="profile.html">👤 Профиль</a>
-        </nav>
-    </header>
+    <header>...</header>
 
-    <main>
-        <h1 class="page-title">👤 Мой профиль</h1>
-        <div class="profile-card">
-            <p>📧 Логин: <span id="username">Пользователь</span></p>
-            <p>💰 Баланс: <span id="balance">0 ₽</span></p>
-            <p>📊 Сделок: <span id="dealsCount">0</span></p>
-            <button class="btn" id="logoutBtn">Выйти</button>
-        </div>
+    <main class="container" style="padding:40px 20px;">
+        <div id="profileContent" style="background:#1A1A1A; padding:30px; border-radius:20px;"></div>
     </main>
 
-    <footer>
-        <p>Ваши данные в безопасности</p>
-    </footer>
-    <script src="script.js"></script>
+    <footer>...</footer>
+
+    <script>
+        function renderProfile() {
+            const user = JSON.parse(localStorage.getItem('neoPlay_currentUser'));
+            if (!user) { location.href = 'login.html'; return; }
+            
+            const deals = JSON.parse(localStorage.getItem('neoPlay_deals')) || [];
+            const myDeals = deals.filter(d => d.buyer === user.username || d.seller === user.username);
+            
+            document.getElementById('profileContent').innerHTML = `
+                <h1 style="color:#FFD700;">👤 ${user.username}</h1>
+                ${user.isOwner ? '<p style="color:#FFD700;">👑 Владелец платформы</p>' : ''}
+                <p>📞 ${user.phone}</p>
+                <p>💰 Баланс: ${user.balance || 0} ₽</p>
+                <p>🏆 Сделок: ${myDeals.length}</p>
+                
+                <h2 style="margin-top:30px;">🏅 Мои значки</h2>
+                <div id="userBadges" class="badges-grid" style="justify-content:flex-start;"></div>
+                
+                <h2 style="margin-top:30px;">📋 История сделок</h2>
+                <div id="dealsHistory"></div>
+            `;
+            
+            // Значки
+            const badgesContainer = document.getElementById('userBadges');
+            if (!user.badges || user.badges.length === 0) {
+                badgesContainer.innerHTML = '<p>У вас пока нет значков</p>';
+            } else {
+                badgesContainer.innerHTML = user.badges.map(b => `
+                    <div class="badge-card" style="width:150px;">
+                        <div class="badge-icon">${b.icon}</div>
+                        <h3>${b.name}</h3>
+                    </div>
+                `).join('');
+            }
+            
+            // История сделок
+            const dealsContainer = document.getElementById('dealsHistory');
+            if (myDeals.length === 0) {
+                dealsContainer.innerHTML = '<p>Нет сделок</p>';
+            } else {
+                dealsContainer.innerHTML = myDeals.map(d => `
+                    <div style="border-bottom:1px solid #2A2A2A; padding:10px;">
+                        ${d.buyer === user.username ? '🛒 Купил' : '📦 Продал'} "${d.item}" за ${d.price} ₽ (${new Date(d.date).toLocaleDateString()})
+                    </div>
+                `).join('');
+            }
+        }
+        
+        renderProfile();
+    </script>
 </body>
 </html>
-<h2 id="userNick"></h2>
-<span id="ownerBadge" style="color:gold; display:none;">👑 Владелец</span>
-
-<script>
-    const user = JSON.parse(localStorage.getItem("neoPlay_currentUser"));
-    if (user) {
-        document.getElementById("userNick").innerText = user.username;
-        if (user.isOwner) {
-            document.getElementById("ownerBadge").style.display = "inline";
-        }
-    }
-</script>
