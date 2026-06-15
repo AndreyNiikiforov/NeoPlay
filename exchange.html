@@ -2,51 +2,75 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Биржа — NeoPlay</title>
+    <title>Биржа NeoPlay</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <div class="logo">NEO<span class="gold">PLAY</span></div>
-        <nav>
-            <a href="index.html">🏠 Главная</a>
-            <a href="catalog.html">📦 Каталог</a>
-            <a href="exchange.html">🔄 Биржа</a>
-            <a href="badges.html">🏆 Значки</a>
-            <a href="profile.html">👤 Профиль</a>
-        </nav>
-    </header>
+    <header>...</header>
 
-    <main>
-        <h1 class="page-title">🔄 Биржа значков</h1>
-        <p class="info">💰 Комиссия NeoPlay — 2% с каждой продажи</p>
-        <div class="exchange-grid">
-            <div class="exchange-item">
-                <span class="badge-icon">🔴</span>
-                <span>Элитный</span>
-                <span>комиссия 1% + скидка 5%</span>
-                <span class="price">3 000 ₽</span>
-                <button class="btn-small">Купить</button>
-            </div>
-            <div class="exchange-item">
-                <span class="badge-icon">👑</span>
-                <span>Легендарный</span>
-                <span>комиссия 0% + скидка 10%</span>
-                <span class="price">15 000 ₽</span>
-                <button class="btn-small">Купить</button>
-            </div>
-            <div class="exchange-item absolute">
-                <span class="badge-icon">💎</span>
-                <span>Абсолют</span>
-                <span>0% комиссия + скидка 20%</span>
-                <span class="price">50 000 ₽</span>
-                <button class="btn-small">Купить</button>
-            </div>
-        </div>
+    <main class="container" style="padding:40px 20px;">
+        <h1 style="color:#FFD700;">🔄 Биржа значков</h1>
+        <p style="margin-bottom:20px;">💰 Комиссия NeoPlay: 2%</p>
+        <div id="exchangeGrid" class="badges-grid"></div>
     </main>
 
-    <footer>
-        <p>Продавай свои значки другим пользователям</p>
-    </footer>
+    <footer>...</footer>
+
+    <script>
+        function renderExchange() {
+            const listings = JSON.parse(localStorage.getItem('neoPlay_badgeExchange')) || [];
+            const container = document.getElementById('exchangeGrid');
+            if (listings.length === 0) {
+                container.innerHTML = '<p style="text-align:center;">Нет значков в продаже</p>';
+                return;
+            }
+            container.innerHTML = listings.map(l => `
+                <div class="badge-card">
+                    <div class="badge-icon">${l.icon}</div>
+                    <h3>${l.name}</h3>
+                    <div class="price">${l.price} ₽</div>
+                    <p style="font-size:12px;">Продавец: ${l.seller}</p>
+                    <button class="btn-outline" onclick="buyBadge(${l.id})">Купить</button>
+                </div>
+            `).join('');
+        }
+
+        window.buyBadge = (id) => {
+            const user = JSON.parse(localStorage.getItem('neoPlay_currentUser'));
+            if (!user) { alert('Войдите'); location.href='login.html'; return; }
+            const listings = JSON.parse(localStorage.getItem('neoPlay_badgeExchange')) || [];
+            const badge = listings.find(b => b.id === id);
+            if (!badge) return;
+            if (user.balance < badge.price) { alert('Недостаточно средств'); location.href='wallet.html'; return; }
+            
+            // Списываем деньги
+            user.balance -= badge.price;
+            localStorage.setItem('neoPlay_currentUser', JSON.stringify(user));
+            
+            // Комиссия 2%
+            const commission = Math.floor(badge.price * 0.02);
+            const sellerGets = badge.price - commission;
+            
+            // Начисляем продавцу
+            const users = JSON.parse(localStorage.getItem('neoPlay_users')) || [];
+            const seller = users.find(u => u.username === badge.seller);
+            if (seller) seller.balance = (seller.balance || 0) + sellerGets;
+            localStorage.setItem('neoPlay_users', JSON.stringify(users));
+            
+            // Добавляем значок покупателю
+            user.badges = user.badges || [];
+            user.badges.push({ id: badge.badgeId, name: badge.name, icon: badge.icon });
+            localStorage.setItem('neoPlay_currentUser', JSON.stringify(user));
+            
+            // Удаляем объявление
+            const newListings = listings.filter(b => b.id !== id);
+            localStorage.setItem('neoPlay_badgeExchange', JSON.stringify(newListings));
+            
+            alert(`Значок "${badge.name}" куплен! Комиссия NeoPlay: ${commission} ₽`);
+            renderExchange();
+        };
+
+        renderExchange();
+    </script>
 </body>
 </html>
