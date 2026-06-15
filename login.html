@@ -1,19 +1,17 @@
-<form id="loginForm">
-    <input type="text" id="loginPhone" placeholder="Номер телефона" required>
-    <input type="password" id="loginPassword" placeholder="Пароль" required>
-    <button type="submit" class="btn">Войти</button>
+<form id="loginForm" style="max-width:400px; margin:100px auto; background:#1A1A1A; padding:40px; border-radius:20px;">
+    <input type="text" id="phone" placeholder="Номер телефона" style="width:100%; padding:12px; margin-bottom:16px;">
+    <input type="password" id="password" placeholder="Пароль" style="width:100%; padding:12px; margin-bottom:16px;">
+    <button type="submit" class="btn-glow">Войти</button>
 </form>
-
 <script>
-    document.getElementById("loginForm").onsubmit = (e) => {
+    document.getElementById('loginForm').onsubmit = (e) => {
         e.preventDefault();
-        const phone = document.getElementById("loginPhone").value;
-        const password = document.getElementById("loginPassword").value;
-        const users = JSON.parse(localStorage.getItem("neoPlay_users")) || [];
+        const phone = document.getElementById('phone').value;
+        const password = document.getElementById('password').value;
+        const users = JSON.parse(localStorage.getItem('neoPlay_users')) || [];
         const user = users.find(u => u.phone === phone && u.password === password);
-        if (!user) return alert("Неверные данные");
-        localStorage.setItem("neoPlay_currentUser", JSON.stringify(user));
-        alert(`Добро пожаловать, ${user.username}`);
-        window.location.href = "profile.html";
+        if (!user) { alert('Неверные данные'); return; }
+        localStorage.setItem('neoPlay_currentUser', JSON.stringify(user));
+        location.href = 'index.html';
     };
 </script>
