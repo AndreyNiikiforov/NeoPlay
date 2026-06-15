@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"></head>
+<body>
+<script>
+    // ТВОЙ СЕКРЕТ ИЗ ЮMONEY
+    const SECRET_WORD = 'uANhBPnAkXlGluLrgW53wpWK';
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const notificationType = urlParams.get('notification_type');
+    const amount = urlParams.get('amount');
+    const label = urlParams.get('label'); // здесь Telegram username пользователя
+    
+    if (notificationType === 'p2p-incoming' && amount > 0 && label) {
+        try {
+            // Получаем всех пользователей
+            let users = JSON.parse(localStorage.getItem('neoPlay_users') || '[]');
+            let userIndex = users.findIndex(u => u.username === label);
+            
+            if (userIndex !== -1) {
+                // Зачисляем деньги
+                const depositAmount = parseFloat(amount);
+                users[userIndex].balance = (users[userIndex].balance || 0) + depositAmount;
+                localStorage.setItem('neoPlay_users', JSON.stringify(users));
+                
+                // Обновляем текущего пользователя, если он залогинен
+                let currentUser = JSON.parse(localStorage.getItem('neoPlay_currentUser') || 'null');
+                if (currentUser && currentUser.username === label) {
+                    currentUser.balance = users[userIndex].balance;
+                    localStorage.setItem('neoPlay_currentUser', JSON.stringify(currentUser));
+                }
+                
+                console.log(`✅ Зачислено ${depositAmount} ₽ пользователю ${label}`);
+                document.body.innerHTML = 'OK';
+            } else {
+                console.log(`❌ Пользователь ${label} не найден`);
+                document.body.innerHTML = 'ERROR: User not found';
+            }
+        } catch(e) {
+            console.error('Ошибка:', e);
+            document.body.innerHTML = 'ERROR: ' + e.message;
+        }
+    } else {
+        document.body.innerHTML = 'OK';
+    }
+</script>
+</body>
+</html>
