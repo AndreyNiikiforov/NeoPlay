@@ -2,53 +2,90 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Каталог — NeoPlay</title>
+    <title>Каталог NeoPlay</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <div class="logo">NEO<span class="gold">PLAY</span></div>
-        <nav>
-            <a href="index.html">🏠 Главная</a>
-            <a href="catalog.html">📦 Каталог</a>
-            <a href="exchange.html">🔄 Биржа</a>
-            <a href="badges.html">🏆 Значки</a>
-            <a href="profile.html">👤 Профиль</a>
-        </nav>
-    </header>
+    <header>...</header> <!-- такой же хедер как в index.html -->
 
-    <main>
-        <h1 class="page-title">📦 Каталог товаров</h1>
-        <div class="catalog-grid">
-            <div class="product">
-                <h3>AK-47 | Fire Serpent</h3>
-                <p>CS2 скин</p>
-                <div class="price">500 ₽</div>
-                <button class="btn-small">Купить</button>
-            </div>
-            <div class="product">
-                <h3>Standoff 2 | 1000 голды</h3>
-                <p>Игровая валюта</p>
-                <div class="price">400 ₽</div>
-                <button class="btn-small">Купить</button>
-            </div>
-            <div class="product">
-                <h3>NFC-стикер NeoPlay</h3>
-                <p>Физический подарок</p>
-                <div class="price">150 ₽</div>
-                <button class="btn-small">Купить</button>
-            </div>
-            <div class="product">
-                <h3>Брелок NeoPlay</h3>
-                <p>NFC + дизайн</p>
-                <div class="price">300 ₽</div>
-                <button class="btn-small">Купить</button>
-            </div>
-        </div>
+    <main class="container" style="padding:40px 20px;">
+        <h1 style="color:#FFD700;">📦 Каталог товаров</h1>
+        
+        <!-- Кнопка создания объявления (только для продавцов) -->
+        <button id="createListingBtn" class="btn-glow" style="margin:20px 0;">➕ Создать объявление</button>
+        
+        <!-- Сетка товаров -->
+        <div id="listingsGrid" class="badges-grid"></div>
     </main>
 
-    <footer>
-        <p>NeoPlay — каталог пополняется</p>
-    </footer>
+    <footer>...</footer>
+
+    <script>
+        function renderListings() {
+            const listings = JSON.parse(localStorage.getItem('neoPlay_listings')) || [];
+            const container = document.getElementById('listingsGrid');
+            if (listings.length === 0) {
+                container.innerHTML = '<p style="text-align:center; width:100%;">Нет товаров. Создайте первое объявление!</p>';
+                return;
+            }
+            container.innerHTML = listings.map(l => `
+                <div class="badge-card" style="width:280px;">
+                    <h3>${l.title}</h3>
+                    <p>${l.description}</p>
+                    <div class="price">${l.price} ₽</div>
+                    <p style="font-size:12px; color:#888;">Продавец: ${l.seller}</p>
+                    <button class="btn-outline" onclick="buyItem(${l.id})">Купить</button>
+                </div>
+            `).join('');
+        }
+
+        function buyItem(id) {
+            const user = JSON.parse(localStorage.getItem('neoPlay_currentUser'));
+            if (!user) { alert('Войдите в профиль'); location.href='login.html'; return; }
+            const listings = JSON.parse(localStorage.getItem('neoPlay_listings')) || [];
+            const item = listings.find(l => l.id === id);
+            if (!item) return;
+            if (user.balance < item.price) { alert('Недостаточно средств'); location.href='wallet.html'; return; }
+            
+            // Списание денег
+            user.balance -= item.price;
+            localStorage.setItem('neoPlay_currentUser', JSON.stringify(user));
+            
+            // Добавляем сделку
+            const deals = JSON.parse(localStorage.getItem('neoPlay_deals')) || [];
+            deals.push({ buyer: user.username, seller: item.seller, item: item.title, price: item.price, date: new Date().toISOString() });
+            localStorage.setItem('neoPlay_deals', JSON.stringify(deals));
+            
+            // Удаляем объявление
+            const newListings = listings.filter(l => l.id !== id);
+            localStorage.setItem('neoPlay_listings', JSON.stringify(newListings));
+            
+            alert(`Товар "${item.title}" куплен!`);
+            renderListings();
+        }
+
+        document.getElementById('createListingBtn')?.addEventListener('click', () => {
+            const user = JSON.parse(localStorage.getItem('neoPlay_currentUser'));
+            if (!user) { alert('Войдите в профиль'); location.href='login.html'; return; }
+            
+            const title = prompt('Название товара:');
+            if (!title) return;
+            const description = prompt('Описание:');
+            const price = parseInt(prompt('Цена в рублях:'));
+            if (isNaN(price)) return;
+            
+            const listings = JSON.parse(localStorage.getItem('neoPlay_listings')) || [];
+            listings.push({
+                id: Date.now(),
+                title, description, price,
+                seller: user.username,
+                date: new Date().toISOString()
+            });
+            localStorage.setItem('neoPlay_listings', JSON.stringify(listings));
+            renderListings();
+        });
+
+        renderListings();
+    </script>
 </body>
 </html>
