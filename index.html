@@ -2,9 +2,8 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeoPlay — Game Marketplace</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <title>NeoPlay — игровой маркетплейс</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,12 +11,13 @@
         <div class="container">
             <div class="logo" onclick="location.href='index.html'">NEO<span class="play">PLAY</span></div>
             <nav>
-                <a href="index.html">🏠 Главная</a>
-                <a href="catalog.html">📦 Каталог</a>
-                <a href="exchange.html">🔄 Биржа</a>
-                <a href="badges.html">🏆 Значки</a>
-                <a href="profile.html">👤 Профиль</a>
-                <a href="wallet.html">💳 Кошелек</a>
+                <a href="index.html">Главная</a>
+                <a href="catalog.html">Каталог</a>
+                <a href="exchange.html">Биржа</a>
+                <a href="badges.html">Значки</a>
+                <a href="profile.html">Профиль</a>
+                <a href="wallet.html">Кошелёк</a>
+                <a href="admin.html" id="adminLink" style="display:none;">Админ</a>
             </nav>
             <div class="auth-links">
                 <a href="login.html" id="loginLink">Вход</a>
@@ -28,75 +28,26 @@
     </header>
 
     <main>
-        <!-- Розыгрыш -->
         <section class="hero">
             <div class="container">
                 <h1>РОЗЫГРЫШ <span class="gold">АБСОЛЮТА</span></h1>
                 <div class="hero-badge">💎</div>
                 <div class="hero-sub">0% КОМИССИИ НАВСЕГДА</div>
-                <p class="hero-text">Участвуй в розыгрыше и получай топовые награды на лучших условиях платформы!</p>
+                <p class="hero-text">Участвуй в розыгрыше и получай топовые награды</p>
                 <button class="btn-glow" id="giveawayBtn">УЧАСТВОВАТЬ</button>
             </div>
         </section>
 
-        <!-- Значки -->
         <section class="badges-section">
             <div class="container">
                 <h2 class="section-title">КОЛЛЕКЦИОННЫЕ ЗНАЧКИ</h2>
-                <div class="badges-grid">
-                    <div class="badge-card" data-badge="common">
-                        <div class="badge-icon">⚪</div>
-                        <h3>ОБЫЧНЫЙ</h3>
-                        <p>Базовый значок</p>
-                        <div class="price">от 19 ₽</div>
-                        <button class="btn-outline" onclick="location.href='catalog.html'">В КАТАЛОГ</button>
-                    </div>
-                    <div class="badge-card" data-badge="rare">
-                        <div class="badge-icon">🟣</div>
-                        <h3>РЕДКИЙ</h3>
-                        <p>Редкий значок</p>
-                        <div class="price">от 99 ₽</div>
-                        <button class="btn-outline" onclick="location.href='catalog.html'">В КАТАЛОГ</button>
-                    </div>
-                    <div class="badge-card" data-badge="elite">
-                        <div class="badge-icon">🔴</div>
-                        <h3>ЭЛИТНЫЙ</h3>
-                        <p>Элитный значок</p>
-                        <div class="price">от 499 ₽</div>
-                        <button class="btn-outline" onclick="location.href='catalog.html'">В КАТАЛОГ</button>
-                    </div>
-                    <div class="badge-card absolute" data-badge="absolute">
-                        <div class="badge-icon">💎</div>
-                        <h3>АБСОЛЮТ</h3>
-                        <p>Абсолютный значок</p>
-                        <div class="price">от 999 ₽</div>
-                        <button class="btn-outline" onclick="location.href='catalog.html'">В КАТАЛОГ</button>
-                    </div>
-                </div>
+                <div class="badges-grid" id="badgesGrid"></div>
             </div>
         </section>
 
-        <!-- Статистика -->
         <section class="stats">
             <div class="container">
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-number">50K+</div>
-                        <div class="stat-label">Активных пользователей</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">100K+</div>
-                        <div class="stat-label">Проданных предметов</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">4.9</div>
-                        <div class="stat-label">Средняя оценка</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">24/7</div>
-                        <div class="stat-label">Поддержка</div>
-                    </div>
-                </div>
+                <div class="stats-grid" id="statsGrid"></div>
             </div>
         </section>
     </main>
@@ -104,61 +55,89 @@
     <footer>
         <div class="container">
             <div class="footer-links">
-                <a href="policy.html">Политика конфиденциальности</a>
-                <a href="offer.html">Пользовательское соглашение</a>
-                <a href="https://t.me/neo_play_news" target="_blank">Telegram-канал</a>
+                <a href="policy.html">Политика</a>
+                <a href="offer.html">Оферта</a>
                 <a href="support.html">Поддержка</a>
             </div>
-            <div class="footer-copy">© 2025 NeoPlay. Все сделки защищены.</div>
+            <div class="footer-copy">© 2025 NeoPlay</div>
         </div>
     </footer>
 
     <script src="script.js"></script>
     <script>
-        // Обновление интерфейса при загрузке
+        function renderBadges() {
+            const badges = [
+                { name: 'ОБЫЧНЫЙ', icon: '⚪', price: 19, color: '#888' },
+                { name: 'РЕДКИЙ', icon: '🟣', price: 99, color: '#AA66FF' },
+                { name: 'ЭЛИТНЫЙ', icon: '🔴', price: 499, color: '#FF4444' },
+                { name: 'АБСОЛЮТ', icon: '💎', price: 999, color: '#FFD700', absolute: true }
+            ];
+            const container = document.getElementById('badgesGrid');
+            container.innerHTML = badges.map(b => `
+                <div class="badge-card ${b.absolute ? 'absolute' : ''}" style="border-color:${b.color}">
+                    <div class="badge-icon">${b.icon}</div>
+                    <h3>${b.name}</h3>
+                    <p>от ${b.price} ₽</p>
+                    <button class="btn-outline" onclick="location.href='catalog.html'">В КАТАЛОГ</button>
+                </div>
+            `).join('');
+        }
+
+        function renderStats() {
+            const users = JSON.parse(localStorage.getItem('neoPlay_users')) || [];
+            const deals = JSON.parse(localStorage.getItem('neoPlay_deals')) || [];
+            const reviews = JSON.parse(localStorage.getItem('neoPlay_reviews')) || [];
+            const avgRating = reviews.length ? (reviews.reduce((a,b)=>a+b.rating,0)/reviews.length).toFixed(1) : '5.0';
+            
+            const stats = [
+                { number: users.length + 'K+', label: 'Активных пользователей' },
+                { number: deals.length + 'K+', label: 'Проданных предметов' },
+                { number: avgRating, label: 'Средняя оценка' },
+                { number: '24/7', label: 'Поддержка' }
+            ];
+            document.getElementById('statsGrid').innerHTML = stats.map(s => `
+                <div class="stat-item">
+                    <div class="stat-number">${s.number}</div>
+                    <div class="stat-label">${s.label}</div>
+                </div>
+            `).join('');
+        }
+
         function updateUI() {
             const user = JSON.parse(localStorage.getItem('neoPlay_currentUser'));
             const loginLink = document.getElementById('loginLink');
             const registerLink = document.getElementById('registerLink');
             const userBalance = document.getElementById('userBalance');
+            const adminLink = document.getElementById('adminLink');
             
             if (user) {
                 loginLink.style.display = 'none';
                 registerLink.style.display = 'none';
                 userBalance.style.display = 'inline-block';
                 userBalance.innerText = `${user.balance || 0} ₽`;
+                if (user.isOwner) adminLink.style.display = 'inline-block';
             } else {
                 loginLink.style.display = 'inline-block';
                 registerLink.style.display = 'inline-block';
                 userBalance.style.display = 'none';
             }
         }
-        
-        // Розыгрыш
+
         document.getElementById('giveawayBtn')?.addEventListener('click', () => {
             const user = JSON.parse(localStorage.getItem('neoPlay_currentUser'));
-            if (!user) {
-                alert('Войдите в профиль, чтобы купить билет за 100 ₽');
-                location.href = 'login.html';
-                return;
-            }
-            if ((user.balance || 0) < 100) {
-                alert('Недостаточно средств. Пополните баланс в кошельке.');
-                location.href = 'wallet.html';
-                return;
-            }
+            if (!user) { alert('Войдите в профиль'); location.href='login.html'; return; }
+            if ((user.balance||0) < 100) { alert('Недостаточно средств'); location.href='wallet.html'; return; }
             user.balance -= 100;
             localStorage.setItem('neoPlay_currentUser', JSON.stringify(user));
-            
-            // Сохраняем билет
             const tickets = JSON.parse(localStorage.getItem('neoPlay_tickets')) || [];
             tickets.push({ username: user.username, phone: user.phone, date: new Date().toISOString() });
             localStorage.setItem('neoPlay_tickets', JSON.stringify(tickets));
-            
-            alert('✅ Билет куплен! Удачи в розыгрыше! Итоги в 20:00.');
+            alert('Билет куплен! Итоги в 20:00');
             updateUI();
         });
-        
+
+        renderBadges();
+        renderStats();
         updateUI();
     </script>
 </body>
