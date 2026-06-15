@@ -8,32 +8,50 @@
 <body>
     <header>...</header>
 
-    <main class="container" style="padding:40px 20px;">
-        <div id="profileContent" style="background:#1A1A1A; padding:30px; border-radius:20px;"></div>
+    <main class="container" style="padding: 40px 20px;">
+        <div id="profileContent"></div>
     </main>
-
-    <footer>...</footer>
 
     <script>
         function renderProfile() {
-            const user = JSON.parse(localStorage.getItem('neoPlay_currentUser'));
+            let user = JSON.parse(localStorage.getItem('neoPlay_currentUser'));
             if (!user) { location.href = 'login.html'; return; }
+            
+            // Загружаем дополнительные данные профиля
+            let profiles = JSON.parse(localStorage.getItem('neoPlay_profiles')) || {};
+            let userProfile = profiles[user.username] || { avatar: '👤', bio: '', social: '' };
             
             const deals = JSON.parse(localStorage.getItem('neoPlay_deals')) || [];
             const myDeals = deals.filter(d => d.buyer === user.username || d.seller === user.username);
             
             document.getElementById('profileContent').innerHTML = `
-                <h1 style="color:#FFD700;">👤 ${user.username}</h1>
-                ${user.isOwner ? '<p style="color:#FFD700;">👑 Владелец платформы</p>' : ''}
-                <p>📞 ${user.phone}</p>
-                <p>💰 Баланс: ${user.balance || 0} ₽</p>
-                <p>🏆 Сделок: ${myDeals.length}</p>
-                
-                <h2 style="margin-top:30px;">🏅 Мои значки</h2>
-                <div id="userBadges" class="badges-grid" style="justify-content:flex-start;"></div>
-                
-                <h2 style="margin-top:30px;">📋 История сделок</h2>
-                <div id="dealsHistory"></div>
+                <div style="background:#1A1A1A; padding:30px; border-radius:20px;">
+                    <div style="text-align:center;">
+                        <div style="font-size:64px;">${userProfile.avatar}</div>
+                        <h1 style="color:#FFD700;">${user.username}</h1>
+                        ${user.isOwner ? '<p style="color:#FFD700;">👑 Владелец платформы</p>' : ''}
+                        <p>📞 ${user.phone}</p>
+                        <p>💰 Баланс: ${user.balance || 0} ₽</p>
+                        <p>🏆 Сделок: ${myDeals.length}</p>
+                        <button id="editProfileBtn" class="btn-outline" style="margin-top:15px;">✏️ Редактировать профиль</button>
+                    </div>
+                    
+                    <div style="margin-top:30px;">
+                        <h3>📝 О себе</h3>
+                        <p>${userProfile.bio || 'Не указано'}</p>
+                    </div>
+                    
+                    <div style="margin-top:20px;">
+                        <h3>🔗 Соцсети</h3>
+                        <p>${userProfile.social ? `<a href="${userProfile.social}" target="_blank">${userProfile.social}</a>` : 'Не указано'}</p>
+                    </div>
+                    
+                    <h2 style="margin-top:30px;">🏅 Мои значки</h2>
+                    <div id="userBadges" class="badges-grid" style="justify-content:flex-start;"></div>
+                    
+                    <h2 style="margin-top:30px;">📋 История сделок</h2>
+                    <div id="dealsHistory"></div>
+                </div>
             `;
             
             // Значки
@@ -56,10 +74,26 @@
             } else {
                 dealsContainer.innerHTML = myDeals.map(d => `
                     <div style="border-bottom:1px solid #2A2A2A; padding:10px;">
-                        ${d.buyer === user.username ? '🛒 Купил' : '📦 Продал'} "${d.item}" за ${d.price} ₽ (${new Date(d.date).toLocaleDateString()})
+                        ${d.buyer === user.username ? '🛒 Купил' : '📦 Продал'} "${d.item}" за ${d.price} ₽
+                        <span style="color:#FFD700;">(комиссия ${d.commission} ₽)</span>
+                        <br><small>${new Date(d.date).toLocaleString()}</small>
                     </div>
                 `).join('');
             }
+            
+            document.getElementById('editProfileBtn').onclick = () => {
+                const newAvatar = prompt('Введите эмодзи для аватара:', userProfile.avatar);
+                const newBio = prompt('Расскажите о себе:', userProfile.bio);
+                const newSocial = prompt('Ссылка на соцсеть (Telegram/VK):', userProfile.social);
+                
+                profiles[user.username] = {
+                    avatar: newAvatar || '👤',
+                    bio: newBio || '',
+                    social: newSocial || ''
+                };
+                localStorage.setItem('neoPlay_profiles', JSON.stringify(profiles));
+                renderProfile();
+            };
         }
         
         renderProfile();
