@@ -1,41 +1,80 @@
-<main>
-    <h1>Панель владельца</h1>
-    <div class="admin-card">
-        <h3>Все пользователи</h3>
-        <div id="usersList"></div>
-        <button id="addBalanceToAllBtn">+100 баланса всем</button>
-        <button id="clearTicketsBtn">Сбросить билеты розыгрыша</button>
-        <button id="runGiveawayBtn">Запустить розыгрыш вручную</button>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Админ-панель NeoPlay</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container" style="padding:40px 20px;">
+        <h1 style="color:#FFD700;">👑 Админ-панель</h1>
+        <div id="adminContent"></div>
     </div>
-</main>
-
-<script>
-    if (!JSON.parse(localStorage.getItem("neoPlay_currentUser"))?.isOwner) {
-        alert("Доступ только владельцу");
-        location.href = "index.html";
-    }
-
-    function renderUsers() {
-        const users = JSON.parse(localStorage.getItem("neoPlay_users")) || [];
-        const list = document.getElementById("usersList");
-        list.innerHTML = users.map(u => `<p>${u.username} — ${u.phone} — баланс: ${u.balance}₽</p>`).join("");
-    }
-    renderUsers();
-
-    document.getElementById("addBalanceToAllBtn").onclick = () => {
-        let users = JSON.parse(localStorage.getItem("neoPlay_users")) || [];
-        users = users.map(u => ({ ...u, balance: u.balance + 100 }));
-        localStorage.setItem("neoPlay_users", JSON.stringify(users));
-        renderUsers();
-        alert("Баланс обновлён");
-    };
-
-    document.getElementById("clearTicketsBtn").onclick = () => {
-        localStorage.removeItem("neoPlay_tickets");
-        alert("Билеты сброшены");
-    };
-
-    document.getElementById("runGiveawayBtn").onclick = () => {
-        alert("Розыгрыш запущен (логика уже есть в скрипте)");
-    };
-</script>
+    <script>
+        const user = JSON.parse(localStorage.getItem('neoPlay_currentUser'));
+        if (!user || !user.isOwner) {
+            alert('Доступ только владельцу');
+            location.href = 'index.html';
+        }
+        
+        function renderAdmin() {
+            const users = JSON.parse(localStorage.getItem('neoPlay_users')) || [];
+            const tickets = JSON.parse(localStorage.getItem('neoPlay_tickets')) || [];
+            const deals = JSON.parse(localStorage.getItem('neoPlay_deals')) || [];
+            
+            document.getElementById('adminContent').innerHTML = `
+                <div style="background:#1A1A1A; padding:20px; border-radius:20px;">
+                    <h3>📊 Статистика</h3>
+                    <p>Пользователей: ${users.length}</p>
+                    <p>Сделок: ${deals.length}</p>
+                    <p>Билетов розыгрыша: ${tickets.length}</p>
+                    
+                    <h3>👥 Пользователи</h3>
+                    <div id="usersList"></div>
+                    
+                    <button id="runGiveaway" class="btn-glow">🎲 Провести розыгрыш</button>
+                    <button id="clearData" style="background:#FF4444; margin-left:10px;">🗑 Очистить всё</button>
+                </div>
+            `;
+            
+            const usersList = document.getElementById('usersList');
+            usersList.innerHTML = users.map(u => `
+                <div style="border-bottom:1px solid #2A2A2A; padding:10px;">
+                    <strong>${u.username}</strong> | ${u.phone} | Баланс: ${u.balance}₽ | ${u.isOwner ? '👑 Владелец' : ''}
+                    <button onclick="addBalance('${u.phone}')">+100₽</button>
+                </div>
+            `).join('');
+            
+            document.getElementById('runGiveaway').onclick = () => {
+                if (tickets.length < 3) { alert('Мало билетов'); return; }
+                const shuffled = [...tickets];
+                for (let i = shuffled.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+                }
+                const winners = shuffled.slice(0, 3);
+                alert(`Победители: ${winners.map(w=>w.username).join(', ')}`);
+                localStorage.setItem('neoPlay_tickets', JSON.stringify([]));
+            };
+            
+            document.getElementById('clearData').onclick = () => {
+                if(confirm('Удалить всех пользователей?')) {
+                    localStorage.clear();
+                    alert('Данные очищены');
+                    location.reload();
+                }
+            };
+        }
+        
+        window.addBalance = (phone) => {
+            const users = JSON.parse(localStorage.getItem('neoPlay_users')) || [];
+            const user = users.find(u => u.phone === phone);
+            if (user) user.balance = (user.balance || 0) + 100;
+            localStorage.setItem('neoPlay_users', JSON.stringify(users));
+            renderAdmin();
+        };
+        
+        renderAdmin();
+    </script>
+</body>
+</html>
