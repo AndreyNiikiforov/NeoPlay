@@ -5,9 +5,9 @@
 }
 
 body {
-    background: #0A0A0A;
+    background: #0F0F0F;
     font-family: 'Inter', sans-serif;
-    color: #FFFFFF;
+    color: #E0E0E0;
 }
 
 .container {
@@ -16,10 +16,9 @@ body {
     padding: 0 20px;
 }
 
-/* Header */
 header {
-    background: #0F0F0F;
-    border-bottom: 1px solid #1F1F1F;
+    background: #1A1A1A;
+    border-bottom: 1px solid #2A2A2A;
     padding: 16px 0;
     position: sticky;
     top: 0;
@@ -38,6 +37,7 @@ header .container {
     font-size: 28px;
     font-weight: 800;
     cursor: pointer;
+    color: white;
 }
 
 .logo .play {
@@ -45,10 +45,11 @@ header .container {
 }
 
 nav a {
-    color: #E0E0E0;
+    color: #B0B0B0;
     text-decoration: none;
     margin: 0 15px;
     transition: color 0.3s;
+    font-weight: 500;
 }
 
 nav a:hover {
@@ -56,7 +57,7 @@ nav a:hover {
 }
 
 .auth-links a {
-    color: #E0E0E0;
+    color: #B0B0B0;
     text-decoration: none;
     margin: 0 8px;
 }
@@ -66,23 +67,22 @@ nav a:hover {
 }
 
 .balance {
-    background: #1A1A1A;
+    background: #2A2A2A;
     padding: 6px 16px;
     border-radius: 30px;
     color: #FFD700;
     font-weight: 600;
 }
 
-/* Hero */
 .hero {
     text-align: center;
     padding: 60px 20px;
-    background: radial-gradient(ellipse at top, #1A1A2E, #0A0A0A);
+    background: linear-gradient(135deg, #1A1A2E, #0F0F0F);
 }
 
 .hero h1 {
     font-size: 48px;
-    letter-spacing: 2px;
+    color: white;
 }
 
 .gold {
@@ -96,9 +96,9 @@ nav a:hover {
 }
 
 @keyframes pulse {
-    0% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.1); opacity: 0.9; }
-    100% { transform: scale(1); opacity: 1; }
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); text-shadow: 0 0 20px gold; }
+    100% { transform: scale(1); }
 }
 
 .hero-sub {
@@ -108,7 +108,7 @@ nav a:hover {
 }
 
 .hero-text {
-    color: #AAAAAA;
+    color: #AAA;
     margin: 20px 0;
 }
 
@@ -120,15 +120,14 @@ nav a:hover {
     font-weight: 800;
     font-size: 16px;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: 0.3s;
 }
 
 .btn-glow:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+    box-shadow: 0 10px 30px rgba(255,215,0,0.4);
 }
 
-/* Badges */
 .badges-section {
     padding: 60px 0;
 }
@@ -137,6 +136,7 @@ nav a:hover {
     text-align: center;
     font-size: 32px;
     margin-bottom: 40px;
+    color: white;
 }
 
 .badges-grid {
@@ -148,12 +148,12 @@ nav a:hover {
 
 .badge-card {
     background: #1A1A1A;
-    border-radius: 24px;
+    border-radius: 20px;
     padding: 30px 20px;
     text-align: center;
     width: 220px;
     border: 1px solid #2A2A2A;
-    transition: all 0.3s;
+    transition: 0.3s;
 }
 
 .badge-card:hover {
@@ -163,6 +163,7 @@ nav a:hover {
 
 .absolute {
     border: 2px solid #FFD700;
+    box-shadow: 0 0 15px rgba(255,215,0,0.3);
 }
 
 .badge-icon {
@@ -174,11 +175,6 @@ nav a:hover {
     margin: 15px 0 5px;
 }
 
-.price {
-    font-weight: 700;
-    margin: 15px 0;
-}
-
 .btn-outline {
     background: transparent;
     border: 1px solid #FFD700;
@@ -187,20 +183,19 @@ nav a:hover {
     border-radius: 30px;
     cursor: pointer;
     font-weight: 600;
-    transition: all 0.3s;
+    transition: 0.3s;
 }
 
 .btn-outline:hover {
     background: #FFD700;
-    color: #0A0A0A;
+    color: #0F0F0F;
 }
 
-/* Stats */
 .stats {
-    background: #0F0F0F;
+    background: #1A1A1A;
     padding: 50px 0;
-    border-top: 1px solid #1F1F1F;
-    border-bottom: 1px solid #1F1F1F;
+    border-top: 1px solid #2A2A2A;
+    border-bottom: 1px solid #2A2A2A;
 }
 
 .stats-grid {
@@ -218,12 +213,11 @@ nav a:hover {
 }
 
 .stat-label {
-    color: #AAAAAA;
+    color: #AAA;
 }
 
-/* Footer */
 footer {
-    background: #0F0F0F;
+    background: #1A1A1A;
     padding: 40px 0;
     text-align: center;
 }
@@ -237,7 +231,7 @@ footer {
 }
 
 .footer-links a {
-    color: #AAAAAA;
+    color: #AAA;
     text-decoration: none;
 }
 
@@ -246,11 +240,10 @@ footer {
 }
 
 .footer-copy {
-    color: #666666;
+    color: #666;
     font-size: 14px;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .hero h1 { font-size: 32px; }
     .badge-card { width: 180px; }
