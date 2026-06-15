@@ -3,64 +3,281 @@
 <head>
     <meta charset="UTF-8">
     <title>Кошелёк NeoPlay</title>
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #0A0A0A;
+            font-family: 'Inter', sans-serif;
+            color: #FFFFFF;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        header {
+            background: #0F0F0F;
+            border-bottom: 1px solid #1F1F1F;
+            padding: 16px 0;
+        }
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            cursor: pointer;
+            color: #FFFFFF;
+        }
+        .logo .play {
+            color: #FFD700;
+        }
+        nav a {
+            color: #E0E0E0;
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #FFD700;
+        }
+        .balance {
+            background: #1A1A1A;
+            padding: 6px 16px;
+            border-radius: 30px;
+            color: #FFD700;
+            font-weight: 600;
+        }
+        .auth-links a {
+            color: #E0E0E0;
+            text-decoration: none;
+            margin-left: 15px;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #FFD700;
+            color: #FFD700;
+            padding: 10px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+            margin: 5px;
+        }
+        .btn-outline:hover {
+            background: #FFD700;
+            color: #0A0A0A;
+        }
+        .btn-glow {
+            background: linear-gradient(90deg, #FFD700, #FFA500);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 40px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        footer {
+            background: #0F0F0F;
+            padding: 40px 0;
+            text-align: center;
+            margin-top: 60px;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .footer-links a {
+            color: #AAAAAA;
+            text-decoration: none;
+        }
+        .wallet-card {
+            background: #1A1A1A;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 500px;
+            margin: 40px auto;
+        }
+        .wallet-card input {
+            width: 100%;
+            padding: 12px;
+            background: #0F0F0F;
+            border: 1px solid #2A2A2A;
+            border-radius: 12px;
+            color: white;
+            margin: 10px 0;
+        }
+    </style>
 </head>
 <body>
-    <header>...</header>
+    <header>
+        <div class="container">
+            <div class="logo" onclick="location.href='index.html'">NEO<span class="play">PLAY</span></div>
+            <nav>
+                <a href="index.html">Главная</a>
+                <a href="catalog.html">Каталог</a>
+                <a href="exchange.html">Биржа</a>
+                <a href="badges.html">Значки</a>
+                <a href="profile.html">Профиль</a>
+                <a href="wallet.html">Кошелёк</a>
+            </nav>
+            <div class="auth-links" id="authLinks"></div>
+        </div>
+    </header>
 
-    <main class="container" style="padding:40px 20px;">
-        <h1 style="color:#FFD700;">💳 Кошелёк</h1>
-        <div id="walletInfo" style="background:#1A1A1A; padding:30px; border-radius:20px; text-align:center;">
-            <!-- динамическая информация -->
+    <main>
+        <div class="container">
+            <div class="wallet-card">
+                <h1 style="color:#FFD700;">💳 Кошелёк NeoPlay</h1>
+                <div id="walletInfo"></div>
+            </div>
         </div>
     </main>
 
-    <footer>...</footer>
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="policy.html">Политика</a>
+                <a href="offer.html">Оферта</a>
+                <a href="support.html">Поддержка</a>
+            </div>
+            <div class="footer-copy">© 2025 NeoPlay</div>
+        </div>
+    </footer>
 
     <script>
+        // ТВОЙ КОШЕЛЁК
+        const WALLET_ID = '4100119554137609';
+        
+        function updateUI() {
+            const user = JSON.parse(localStorage.getItem('neoPlay_currentUser'));
+            const authLinks = document.getElementById('authLinks');
+            if (user) {
+                authLinks.innerHTML = `<span class="balance">${user.balance || 0} ₽</span>`;
+            } else {
+                authLinks.innerHTML = `<a href="login.html">Вход</a><a href="register.html">Регистрация</a>`;
+            }
+        }
+
         function updateWallet() {
             const user = JSON.parse(localStorage.getItem('neoPlay_currentUser'));
             if (!user) {
                 location.href = 'login.html';
                 return;
             }
+            
             document.getElementById('walletInfo').innerHTML = `
-                <h2>Баланс: ${user.balance || 0} ₽</h2>
+                <h2>💰 Баланс: ${user.balance || 0} ₽</h2>
+                
                 <div style="margin:30px 0;">
-                    <h3>Пополнение</h3>
-                    <button onclick="deposit(100)" class="btn-outline">100 ₽</button>
-                    <button onclick="deposit(500)" class="btn-outline">500 ₽</button>
-                    <button onclick="deposit(1000)" class="btn-outline">1000 ₽</button>
-                    <button onclick="deposit(5000)" class="btn-outline">5000 ₽</button>
+                    <h3>💎 Пополнить баланс</h3>
+                    <div>
+                        <button onclick="deposit(100)" class="btn-outline">100 ₽</button>
+                        <button onclick="deposit(500)" class="btn-outline">500 ₽</button>
+                        <button onclick="deposit(1000)" class="btn-outline">1000 ₽</button>
+                        <button onclick="deposit(5000)" class="btn-outline">5000 ₽</button>
+                        <button onclick="deposit(10000)" class="btn-outline">10 000 ₽</button>
+                    </div>
+                    <p style="margin-top:15px; font-size:12px; color:#888;">
+                        🔐 Деньги поступают на кошелёк ${WALLET_ID}<br>
+                        💳 Принимаются карты РФ, СБП, ApplePay, GooglePay
+                    </p>
                 </div>
-                <div>
-                    <h3>Вывод</h3>
-                    <input type="number" id="withdrawAmount" placeholder="Сумма" style="padding:10px; margin-right:10px;">
-                    <button onclick="withdraw()" class="btn-glow">Вывести</button>
+                
+                <div style="margin:30px 0;">
+                    <h3>💸 Вывод средств</h3>
+                    <input type="number" id="withdrawAmount" placeholder="Сумма вывода">
+                    <button onclick="withdraw()" class="btn-glow">Запросить вывод</button>
+                    <p style="font-size:12px; color:#888; margin-top:10px;">⏱ Вывод обрабатывается вручную в течение 24 часов</p>
                 </div>
-                <p style="margin-top:30px; color:#888;">💰 Пополнение через ЮMoney будет доступно после настройки</p>
+                
+                <div style="margin:30px 0;">
+                    <h3>📊 Последние транзакции</h3>
+                    <div id="transactionsList"></div>
+                </div>
             `;
+            
+            // История транзакций
+            const transactions = JSON.parse(localStorage.getItem('neoPlay_transactions')) || [];
+            const userTransactions = transactions.filter(t => t.username === user.username).slice(-5);
+            const txContainer = document.getElementById('transactionsList');
+            if (userTransactions.length === 0) {
+                txContainer.innerHTML = '<p style="color:#888;">Нет транзакций</p>';
+            } else {
+                txContainer.innerHTML = userTransactions.map(t => `
+                    <div style="border-bottom:1px solid #2A2A2A; padding:8px; text-align:left;">
+                        ${t.type === 'deposit' ? '💰 Пополнение' : '💸 Вывод'}: ${t.amount} ₽ — ${new Date(t.date).toLocaleString()}
+                    </div>
+                `).join('');
+            }
         }
-
+        
+        // Функция пополнения — отправляет на ЮMoney
         window.deposit = (amount) => {
             const user = JSON.parse(localStorage.getItem('neoPlay_currentUser'));
-            user.balance = (user.balance || 0) + amount;
-            localStorage.setItem('neoPlay_currentUser', JSON.stringify(user));
-            updateWallet();
+            if (!user) { alert('Войдите в профиль'); location.href='login.html'; return; }
+            
+            // Ссылка на оплату через ЮMoney (твой кошелёк)
+            const paymentUrl = `https://yoomoney.ru/quickpay/confirm.xml?receiver=${WALLET_ID}&quickpay-form=small&targets=NeoPlay&sum=${amount}&label=${user.username}&comment=Пополнение%20баланса&successURL=https://andreyniikiforov.github.io/NeoPlay/wallet.html`;
+            
+            // Открываем оплату
+            window.location.href = paymentUrl;
         };
-
+        
+        // Запрос вывода на твою карту
         window.withdraw = () => {
             const amount = parseInt(document.getElementById('withdrawAmount').value);
             if (isNaN(amount) || amount <= 0) { alert('Введите сумму'); return; }
             const user = JSON.parse(localStorage.getItem('neoPlay_currentUser'));
-            if (user.balance < amount) { alert('Недостаточно средств'); return; }
+            if ((user.balance || 0) < amount) { alert('Недостаточно средств'); return; }
+            
             user.balance -= amount;
             localStorage.setItem('neoPlay_currentUser', JSON.stringify(user));
-            alert(`Заявка на вывод ${amount} ₽ отправлена. Средства поступят в течение 24 часов.`);
+            
+            // Записываем транзакцию
+            const transactions = JSON.parse(localStorage.getItem('neoPlay_transactions')) || [];
+            transactions.push({ username: user.username, type: 'withdraw', amount: amount, date: new Date().toISOString() });
+            localStorage.setItem('neoPlay_transactions', JSON.stringify(transactions));
+            
+            // Обновляем глобальный список пользователей
+            let users = JSON.parse(localStorage.getItem('neoPlay_users')) || [];
+            const userIndex = users.findIndex(u => u.username === user.username);
+            if (userIndex !== -1) users[userIndex].balance = user.balance;
+            localStorage.setItem('neoPlay_users', JSON.stringify(users));
+            
+            alert(`✅ Заявка на вывод ${amount} ₽ отправлена.\n💰 Деньги поступят на карту ${WALLET_ID} в течение 24 часов.\n📞 При проблемах пиши в поддержку.`);
             updateWallet();
+            updateUI();
         };
-
+        
+        // Проверка успешного пополнения из URL
+        function checkPaymentSuccess() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('success') === '1') {
+                const amount = urlParams.get('amount');
+                if (amount) {
+                    alert(`✅ Оплата ${amount} ₽ прошла успешно! Баланс обновится автоматически через несколько секунд.`);
+                    window.location.href = 'wallet.html';
+                }
+            }
+        }
+        
+        updateUI();
         updateWallet();
+        checkPaymentSuccess();
     </script>
 </body>
 </html>
